@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixLab • Fotos Alessandro</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  background: radial-gradient(circle at center, #161621, #0b0b12);
+  overflow:hidden;
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  text-align:center;
+}
+
+/* Glow suave */
+body::before{
+  content:"";
+  position:absolute;
+  width:500px;
+  height:500px;
+  background: radial-gradient(circle, rgba(255,107,61,0.15), transparent 70%);
+  filter: blur(80px);
+  z-index:0;
+}
+
+/* Intro */
+#intro{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  animation: fadeOut 1s ease 4s forwards;
+  z-index:2;
+}
+
+.pixel{
+  position:absolute;
+  width:14px;
+  height:14px;
+  opacity:0;
+  border-radius:3px;
+  animation: pixelPop 1.2s forwards;
+}
+
+@keyframes pixelPop{
+  0%{opacity:0; transform:scale(0);}
+  100%{opacity:1; transform:scale(1);}
+}
+
+.logo{
+  width:200px;
+  max-width:80%;
+  opacity:0;
+  animation: fadeIn 1.5s ease 1.5s forwards;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
+}
+
+@keyframes fadeIn{
+  to{opacity:1;}
+}
+
+@keyframes fadeOut{
+  to{opacity:0; visibility:hidden;}
+}
+
+/* Tela principal */
+#main{
+  opacity:0;
+  animation: showMain 1s ease 5s forwards;
+  z-index:2;
+  padding:20px;
+}
+
+@keyframes showMain{
+  to{opacity:1;}
+}
+
+h1{
+  font-size:30px;
+  margin-bottom:15px;
+  font-weight:600;
+  letter-spacing:1px;
+}
+
+.subtext{
+  font-size:14px;
+  opacity:0.8;
+  margin-bottom:35px;
+}
+
+.loading{
+  margin-top:15px;
+  font-size:14px;
+  opacity:0;
+  transition:0.3s;
+}
+
+/* Animação pontinhos */
+.dots::after{
+  content:"";
+  animation: dots 1.5s infinite steps(3);
+}
+
+@keyframes dots{
+  0%{content:"";}
+  33%{content:".";}
+  66%{content:"..";}
+  100%{content:"...";}
+}
+
+.download-btn{
+  padding:16px 45px;
+  font-size:18px;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  background: linear-gradient(90deg, #ff6b3d, #00e0ff, #ff3dc8);
+  background-size:200% 200%;
+  color:white;
+  font-weight:600;
+  transition:0.4s;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+  animation: gradientMove 5s ease infinite;
+}
+
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+.download-btn:hover{
+  transform:translateY(-5px) scale(1.05);
+  box-shadow:0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* ================= RESPONSIVIDADE ================= */
+
+/* Tablets */
+@media (max-width: 1024px){
+  h1{
+    font-size:24px;
+  }
+
+  .download-btn{
+    font-size:16px;
+    padding:14px 35px;
+  }
+}
+
+/* Celulares */
+@media (max-width: 600px){
+  body{
+    padding:15px;
+  }
+
+  h1{
+    font-size:20px;
+    line-height:1.4;
+  }
+
+  .subtext{
+    font-size:13px;
+  }
+
+  .download-btn{
+    width:100%;
+    font-size:15px;
+    padding:14px 20px;
+  }
+
+  .logo{
+    width:160px;
+  }
+}
+
+/* Telas grandes */
+@media (min-width: 1600px){
+  h1{
+    font-size:38px;
+  }
+
+  .download-btn{
+    font-size:20px;
+    padding:20px 60px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <img src="https://i.imgur.com/Gst7raT.png" class="logo">
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <h1>Clique aqui para baixar as fotos do Alessandro</h1>
+  <div class="subtext">Obrigado Mariana 💜</div>
+
+  <button class="download-btn" onclick="baixar()">📥 Baixar Fotos</button>
+
+  <div class="loading dots" id="loadingText">Carregando</div>
+</div>
+
+<script>
+const colors = ["#ff6b3d","#00e0ff","#ff3dc8"];
+
+for(let i=0;i<50;i++){
+  const pixel = document.createElement("div");
+  pixel.classList.add("pixel");
+  pixel.style.background = colors[Math.floor(Math.random()*3)];
+  pixel.style.top = Math.random()*100 + "%";
+  pixel.style.left = Math.random()*100 + "%";
+  pixel.style.animationDelay = Math.random()*1.5 + "s";
+  document.getElementById("intro").appendChild(pixel);
+}
+
+function baixar(){
+  const loading = document.getElementById("loadingText");
+  loading.style.opacity = "1";
+
+  setTimeout(() => {
+    window.location.href = "https://drive.google.com/drive/folders/12wtY2k1LTQBSJB4wjfTxgH1jICwoQipc?usp=sharing";
+  }, 1800);
+}
+</script>
+
+</body>
+</html>
